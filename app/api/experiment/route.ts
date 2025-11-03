@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import clientPromise from '@/lib/mongodb';
 import { ExperimentResult } from '@/types';
 import { v4 as uuidv4 } from 'uuid';
+import { Document } from 'mongodb';
 
 export async function POST(request: NextRequest) {
   try {
@@ -30,7 +31,9 @@ export async function POST(request: NextRequest) {
 
     const client = await clientPromise;
     const db = client.db('ui_experiment');
-    await db.collection('results').insertOne(result);
+    // Omit _id when inserting - MongoDB will auto-generate it
+    const { _id, ...resultWithoutId } = result;
+    await db.collection('results').insertOne(resultWithoutId as Document);
 
     return NextResponse.json({
       success: true,
