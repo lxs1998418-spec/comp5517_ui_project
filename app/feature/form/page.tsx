@@ -15,6 +15,18 @@ interface FormData {
   enrollmentYear: string;
   gpa: string;
   status: string;
+  gender: string;
+  birthDate: string;
+  ethnicity: string;
+  idCard: string;
+  emergencyContact: string;
+  emergencyPhone: string;
+  dormitory: string;
+  advisor: string;
+  researchDirection: string;
+  hobbies: string;
+  scholarship: string;
+  clubMembership: string;
 }
 
 export default function FeatureForm() {
@@ -30,6 +42,18 @@ export default function FeatureForm() {
     enrollmentYear: '',
     gpa: '',
     status: '',
+    gender: '',
+    birthDate: '',
+    ethnicity: '',
+    idCard: '',
+    emergencyContact: '',
+    emergencyPhone: '',
+    dormitory: '',
+    advisor: '',
+    researchDirection: '',
+    hobbies: '',
+    scholarship: '',
+    clubMembership: '',
   });
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -48,6 +72,18 @@ export default function FeatureForm() {
         enrollmentYear: student.enrollmentYear?.toString() || '',
         gpa: student.gpa?.toString() || '',
         status: student.status || '',
+        gender: '',
+        birthDate: '',
+        ethnicity: '',
+        idCard: '',
+        emergencyContact: '',
+        emergencyPhone: '',
+        dormitory: '',
+        advisor: '',
+        researchDirection: '',
+        hobbies: '',
+        scholarship: '',
+        clubMembership: '',
       });
     }
   }, []);
@@ -273,6 +309,216 @@ export default function FeatureForm() {
                     }}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-black"
                     placeholder="请输入详细地址"
+                  />
+                </div>
+              </div>
+            </section>
+
+            {/* 个人详细信息 */}
+            <section className="border-b pb-6">
+              <h2 className="text-xl font-semibold mb-4 text-black">个人详细信息</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-black mb-1">
+                    性别
+                  </label>
+                  <select
+                    value={formData.gender}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFormData(prev => ({ ...prev, gender: value }));
+                    }}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-black"
+                  >
+                    <option value="">请选择</option>
+                    <option value="male">男</option>
+                    <option value="female">女</option>
+                    <option value="other">其他</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-black mb-1">
+                    出生日期
+                  </label>
+                  <input
+                    type="date"
+                    value={formData.birthDate}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFormData(prev => ({ ...prev, birthDate: value }));
+                    }}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-black"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-black mb-1">
+                    民族
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.ethnicity}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFormData(prev => ({ ...prev, ethnicity: value }));
+                    }}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-black"
+                    placeholder="例如：汉族"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-black mb-1">
+                    身份证号
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.idCard}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFormData(prev => ({ ...prev, idCard: value }));
+                    }}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-black"
+                    placeholder="18位身份证号码"
+                  />
+                </div>
+              </div>
+            </section>
+
+            {/* 紧急联系信息 */}
+            <section className="border-b pb-6">
+              <h2 className="text-xl font-semibold mb-4 text-black">紧急联系信息</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-black mb-1">
+                    紧急联系人姓名
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.emergencyContact}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFormData(prev => ({ ...prev, emergencyContact: value }));
+                    }}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-black"
+                    placeholder="请输入紧急联系人姓名"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-black mb-1">
+                    紧急联系人电话
+                  </label>
+                  <input
+                    type="tel"
+                    value={formData.emergencyPhone}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFormData(prev => ({ ...prev, emergencyPhone: value }));
+                    }}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-black"
+                    placeholder="11位手机号码"
+                  />
+                </div>
+              </div>
+            </section>
+
+            {/* 住宿与学术信息 */}
+            <section className="border-b pb-6">
+              <h2 className="text-xl font-semibold mb-4 text-black">住宿与学术信息</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-black mb-1">
+                    宿舍号
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.dormitory}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFormData(prev => ({ ...prev, dormitory: value }));
+                    }}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-black"
+                    placeholder="例如：A栋201"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-black mb-1">
+                    导师姓名
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.advisor}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFormData(prev => ({ ...prev, advisor: value }));
+                    }}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-black"
+                    placeholder="请输入导师姓名"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-black mb-1">
+                    研究方向
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.researchDirection}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFormData(prev => ({ ...prev, researchDirection: value }));
+                    }}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-black"
+                    placeholder="例如：人工智能、机器学习"
+                  />
+                </div>
+              </div>
+            </section>
+
+            {/* 其他信息 */}
+            <section className="border-b pb-6">
+              <h2 className="text-xl font-semibold mb-4 text-black">其他信息</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-black mb-1">
+                    兴趣爱好
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.hobbies}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFormData(prev => ({ ...prev, hobbies: value }));
+                    }}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-black"
+                    placeholder="例如：篮球、阅读、音乐"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-black mb-1">
+                    奖学金情况
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.scholarship}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFormData(prev => ({ ...prev, scholarship: value }));
+                    }}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-black"
+                    placeholder="例如：国家奖学金、学业奖学金"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-black mb-1">
+                    社团/组织成员
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.clubMembership}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFormData(prev => ({ ...prev, clubMembership: value }));
+                    }}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-black"
+                    placeholder="例如：学生会、志愿者协会"
                   />
                 </div>
               </div>

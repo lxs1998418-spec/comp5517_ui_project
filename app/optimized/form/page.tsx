@@ -15,6 +15,18 @@ interface FormData {
   enrollmentYear: string;
   gpa: string;
   status: string;
+  gender: string;
+  birthDate: string;
+  ethnicity: string;
+  idCard: string;
+  emergencyContact: string;
+  emergencyPhone: string;
+  dormitory: string;
+  advisor: string;
+  researchDirection: string;
+  hobbies: string;
+  scholarship: string;
+  clubMembership: string;
 }
 
 export default function OptimizedForm() {
@@ -31,6 +43,18 @@ export default function OptimizedForm() {
     enrollmentYear: '',
     gpa: '',
     status: '',
+    gender: '',
+    birthDate: '',
+    ethnicity: '',
+    idCard: '',
+    emergencyContact: '',
+    emergencyPhone: '',
+    dormitory: '',
+    advisor: '',
+    researchDirection: '',
+    hobbies: '',
+    scholarship: '',
+    clubMembership: '',
   });
   const [errors, setErrors] = useState<Partial<FormData>>({});
   const [showPreview, setShowPreview] = useState(false);
@@ -50,6 +74,18 @@ export default function OptimizedForm() {
         enrollmentYear: student.enrollmentYear?.toString() || '',
         gpa: student.gpa?.toString() || '',
         status: student.status || '',
+        gender: '',
+        birthDate: '',
+        ethnicity: '',
+        idCard: '',
+        emergencyContact: '',
+        emergencyPhone: '',
+        dormitory: '',
+        advisor: '',
+        researchDirection: '',
+        hobbies: '',
+        scholarship: '',
+        clubMembership: '',
       });
     }
   }, []);
@@ -79,7 +115,7 @@ export default function OptimizedForm() {
 
   const handleNext = () => {
     if (validateStep(currentStep)) {
-      if (currentStep < 3) {
+      if (currentStep < 5) {
         setCurrentStep(currentStep + 1);
       } else {
         setShowPreview(true);
@@ -113,8 +149,13 @@ export default function OptimizedForm() {
             <p><strong>学号:</strong> {formData.studentId}</p>
             <p><strong>专业:</strong> {formData.major}</p>
             <p><strong>成绩:</strong> {formData.grade}</p>
+            <p><strong>GPA:</strong> {formData.gpa || '未填写'}</p>
             <p><strong>邮箱:</strong> {formData.email}</p>
             <p><strong>电话:</strong> {formData.phone}</p>
+            <p><strong>性别:</strong> {formData.gender || '未填写'}</p>
+            <p><strong>出生日期:</strong> {formData.birthDate || '未填写'}</p>
+            <p><strong>紧急联系人:</strong> {formData.emergencyContact || '未填写'}</p>
+            <p><strong>导师:</strong> {formData.advisor || '未填写'}</p>
           </div>
           <div className="flex gap-4">
             <button
@@ -140,7 +181,7 @@ export default function OptimizedForm() {
       <div className="max-w-2xl mx-auto">
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
-            {[1, 2, 3].map((step) => (
+            {[1, 2, 3, 4, 5].map((step) => (
               <div key={step} className="flex items-center flex-1">
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center ${
@@ -149,7 +190,7 @@ export default function OptimizedForm() {
                 >
                   {step}
                 </div>
-                {step < 3 && (
+                {step < 5 && (
                   <div
                     className={`flex-1 h-1 mx-2 ${
                       currentStep > step ? 'bg-blue-600' : 'bg-gray-300'
@@ -159,10 +200,12 @@ export default function OptimizedForm() {
               </div>
             ))}
           </div>
-          <div className="flex justify-between text-sm text-black">
+          <div className="flex justify-between text-xs text-black">
             <span>基础字段</span>
             <span>学术信息</span>
-            <span>联系确认</span>
+            <span>联系方式</span>
+            <span>详细信息</span>
+            <span>其他信息</span>
           </div>
         </div>
 
@@ -221,14 +264,23 @@ export default function OptimizedForm() {
               </div>
               <div>
                 <label className="block text-sm font-medium mb-1">成绩 *</label>
-                <input
-                  type="text"
+                <select
                   value={formData.grade}
                   onChange={(e) => updateField('grade', e.target.value)}
                   className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black ${
                     errors.grade ? 'border-red-500' : 'border-gray-300'
                   }`}
-                />
+                >
+                  <option value="">请选择</option>
+                  <option value="A+">A+</option>
+                  <option value="A">A</option>
+                  <option value="A-">A-</option>
+                  <option value="B+">B+</option>
+                  <option value="B">B</option>
+                  <option value="B-">B-</option>
+                  <option value="C+">C+</option>
+                  <option value="C">C</option>
+                </select>
                 {errors.grade && (
                   <p className="text-red-500 text-sm mt-1">{errors.grade}</p>
                 )}
@@ -247,12 +299,45 @@ export default function OptimizedForm() {
                   <p className="text-red-500 text-sm mt-1">{errors.enrollmentYear}</p>
                 )}
               </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">GPA</label>
+                <input
+                  type="number"
+                  step="0.1"
+                  value={formData.gpa}
+                  onChange={(e) => updateField('gpa', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  placeholder="例如：3.8"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">学籍状态</label>
+                <select
+                  value={formData.status}
+                  onChange={(e) => updateField('status', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                >
+                  <option value="active">在读</option>
+                  <option value="graduated">已毕业</option>
+                  <option value="suspended">已停学</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">居住地址</label>
+                <input
+                  type="text"
+                  value={formData.address}
+                  onChange={(e) => updateField('address', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  placeholder="请输入详细地址"
+                />
+              </div>
             </div>
           )}
 
           {currentStep === 3 && (
             <div className="space-y-4">
-              <h2 className="text-xl font-semibold mb-4">Step 3: 联系与确认</h2>
+              <h2 className="text-xl font-semibold mb-4">Step 3: 联系方式</h2>
               <div>
                 <label className="block text-sm font-medium mb-1">邮箱 *</label>
                 <input
@@ -283,6 +368,140 @@ export default function OptimizedForm() {
                 )}
                 <p className="text-xs text-black mt-1">请输入11位手机号码</p>
               </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">紧急联系人姓名</label>
+                <input
+                  type="text"
+                  value={formData.emergencyContact}
+                  onChange={(e) => updateField('emergencyContact', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  placeholder="请输入紧急联系人姓名"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">紧急联系人电话</label>
+                <input
+                  type="tel"
+                  value={formData.emergencyPhone}
+                  onChange={(e) => updateField('emergencyPhone', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  placeholder="11位手机号码"
+                />
+              </div>
+            </div>
+          )}
+
+          {currentStep === 4 && (
+            <div className="space-y-4">
+              <h2 className="text-xl font-semibold mb-4">Step 4: 详细信息</h2>
+              <div>
+                <label className="block text-sm font-medium mb-1">性别</label>
+                <select
+                  value={formData.gender}
+                  onChange={(e) => updateField('gender', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                >
+                  <option value="">请选择</option>
+                  <option value="male">男</option>
+                  <option value="female">女</option>
+                  <option value="other">其他</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">出生日期</label>
+                <input
+                  type="date"
+                  value={formData.birthDate}
+                  onChange={(e) => updateField('birthDate', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">民族</label>
+                <input
+                  type="text"
+                  value={formData.ethnicity}
+                  onChange={(e) => updateField('ethnicity', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  placeholder="例如：汉族"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">身份证号</label>
+                <input
+                  type="text"
+                  value={formData.idCard}
+                  onChange={(e) => updateField('idCard', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  placeholder="18位身份证号码"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">宿舍号</label>
+                <input
+                  type="text"
+                  value={formData.dormitory}
+                  onChange={(e) => updateField('dormitory', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  placeholder="例如：A栋201"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">导师姓名</label>
+                <input
+                  type="text"
+                  value={formData.advisor}
+                  onChange={(e) => updateField('advisor', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  placeholder="请输入导师姓名"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">研究方向</label>
+                <input
+                  type="text"
+                  value={formData.researchDirection}
+                  onChange={(e) => updateField('researchDirection', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  placeholder="例如：人工智能、机器学习"
+                />
+              </div>
+            </div>
+          )}
+
+          {currentStep === 5 && (
+            <div className="space-y-4">
+              <h2 className="text-xl font-semibold mb-4">Step 5: 其他信息</h2>
+              <div>
+                <label className="block text-sm font-medium mb-1">兴趣爱好</label>
+                <input
+                  type="text"
+                  value={formData.hobbies}
+                  onChange={(e) => updateField('hobbies', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  placeholder="例如：篮球、阅读、音乐"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">奖学金情况</label>
+                <input
+                  type="text"
+                  value={formData.scholarship}
+                  onChange={(e) => updateField('scholarship', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  placeholder="例如：国家奖学金、学业奖学金"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">社团/组织成员</label>
+                <input
+                  type="text"
+                  value={formData.clubMembership}
+                  onChange={(e) => updateField('clubMembership', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  placeholder="例如：学生会、志愿者协会"
+                />
+              </div>
             </div>
           )}
 
@@ -298,7 +517,7 @@ export default function OptimizedForm() {
               onClick={handleNext}
               className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
             >
-              {currentStep === 3 ? '预览' : '下一步'}
+              {currentStep === 5 ? '预览' : '下一步'}
             </button>
           </div>
         </div>
