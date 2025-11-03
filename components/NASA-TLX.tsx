@@ -92,7 +92,11 @@ export default function NASA_TLX({ onSubmit }: NASA_TLXProps) {
               <div key={starNum} className="flex flex-col items-center gap-1">
                 <button
                   type="button"
-                  onClick={() => onChange(starValue)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onChange(starValue);
+                  }}
                   className={`text-5xl transition-all hover:scale-125 focus:outline-none ${
                     isSelected ? 'text-yellow-400' : 'text-gray-300'
                   }`}

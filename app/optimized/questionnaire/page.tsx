@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import NASA_TLX from '@/components/NASA-TLX';
 
 export default function OptimizedQuestionnaire() {
@@ -33,7 +33,12 @@ export default function OptimizedQuestionnaire() {
         });
 
         if (response.ok) {
-          setSubmitted(true);
+          // 平滑滚动到顶部后再显示感谢页面
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          // 等待滚动动画完成后再切换状态
+          setTimeout(() => {
+            setSubmitted(true);
+          }, 300);
         }
       } catch (error) {
         console.error('Failed to submit:', error);
@@ -41,6 +46,13 @@ export default function OptimizedQuestionnaire() {
       }
     }
   };
+
+  // 当显示感谢页面时，确保页面在顶部
+  useEffect(() => {
+    if (submitted) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [submitted]);
 
   if (submitted) {
     return (
